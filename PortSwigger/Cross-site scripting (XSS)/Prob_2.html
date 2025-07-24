@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href=/resources/labheader/css/academyLabHeader.css rel=stylesheet>
+        <link href=/resources/css/labsBlog.css rel=stylesheet>
+        <title>Stored XSS into HTML context with nothing encoded</title>
+    </head>
+    <body>
+        <script src="/resources/labheader/js/labHeader.js"></script>
+        <div id="academyLabHeader">
+            <section class='academyLabBanner is-solved'>
+                <div class=container>
+                    <div class=logo></div>
+                        <div class=title-container>
+                            <h2>Stored XSS into HTML context with nothing encoded</h2>
+                            <a class=link-back href='https://portswigger.net/web-security/cross-site-scripting/stored/lab-html-context-nothing-encoded'>
+                                Back&nbsp;to&nbsp;lab&nbsp;description&nbsp;
+                                <svg version=1.1 id=Layer_1 xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x=0px y=0px viewBox='0 0 28 30' enable-background='new 0 0 28 30' xml:space=preserve title=back-arrow>
+                                    <g>
+                                        <polygon points='1.4,0 0,1.2 12.6,15 0,28.8 1.4,30 15.1,15'></polygon>
+                                        <polygon points='14.3,0 12.9,1.2 25.6,15 12.9,28.8 14.3,30 28,15'></polygon>
+                                    </g>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class='widgetcontainer-lab-status is-solved'>
+                            <span>LAB</span>
+                            <p>Solved</p>
+                            <span class=lab-status-icon></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id=notification-labsolved class=notification-labsolved>
+                <div class=container>
+                    <h4>Congratulations, you solved the lab!</h4>
+                    <div>
+                        <span>
+                            Share your skills!
+                        </span>
+                        <a class=button href='https://twitter.com/intent/tweet?text=I+completed+the+Web+Security+Academy+lab%3a%0aStored+XSS+into+HTML+context+with+nothing+encoded%0a%0a@WebSecAcademy%0a&url=https%3a%2f%2fportswigger.net%2fweb-security%2fcross-site-scripting%2fstored%2flab-html-context-nothing-encoded&related=WebSecAcademy,Burp_Suite'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width=24 height=24 viewBox='0 0 20.44 17.72'>
+                        <title>twitter-button</title>
+                        <path d='M0,15.85c11.51,5.52,18.51-2,18.71-12.24.3-.24,1.73-1.24,1.73-1.24H18.68l1.43-2-2.74,1a4.09,4.09,0,0,0-5-.84c-3.13,1.44-2.13,4.94-2.13,4.94S6.38,6.21,1.76,1c-1.39,1.56,0,5.39.67,5.73C2.18,7,.66,6.4.66,5.9-.07,9.36,3.14,10.54,4,10.72a2.39,2.39,0,0,1-2.18.08c-.09,1.1,2.94,3.33,4.11,3.27A10.18,10.18,0,0,1,0,15.85Z'></path>
+                    </svg>
+                        </a>
+                        <a class=button href='https://www.linkedin.com/sharing/share-offsite?url=https%3a%2f%2fportswigger.net%2fweb-security%2fcross-site-scripting%2fstored%2flab-html-context-nothing-encoded'>
+                    <svg viewBox='0 0 64 64' width='24' xml:space='preserve' xmlns='http://www.w3.org/2000/svg'
+                        <title>linkedin-button</title>
+                        <path d='M2,6v52c0,2.2,1.8,4,4,4h52c2.2,0,4-1.8,4-4V6c0-2.2-1.8-4-4-4H6C3.8,2,2,3.8,2,6z M19.1,52H12V24.4h7.1V52z    M15.6,18.9c-2,0-3.6-1.5-3.6-3.4c0-1.9,1.6-3.4,3.6-3.4c2,0,3.6,1.5,3.6,3.4C19.1,17.4,17.5,18.9,15.6,18.9z M52,52h-7.1V38.2   c0-2.9-0.1-4.8-0.4-5.7c-0.3-0.9-0.8-1.5-1.4-2c-0.7-0.5-1.5-0.7-2.4-0.7c-1.2,0-2.3,0.3-3.2,1c-1,0.7-1.6,1.6-2,2.7   c-0.4,1.1-0.5,3.2-0.5,6.2V52h-8.6V24.4h7.1v4.1c2.4-3.1,5.5-4.7,9.2-4.7c1.6,0,3.1,0.3,4.5,0.9c1.3,0.6,2.4,1.3,3.1,2.2   c0.7,0.9,1.2,1.9,1.4,3.1c0.3,1.1,0.4,2.8,0.4,4.9V52z'/>
+                    </svg>
+                        </a>
+                        <a href='https://portswigger.net/web-security/cross-site-scripting/stored/lab-html-context-nothing-encoded'>
+                            Continue learning 
+                            <svg version=1.1 id=Layer_1 xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x=0px y=0px viewBox='0 0 28 30' enable-background='new 0 0 28 30' xml:space=preserve title=back-arrow>
+                                <g>
+                                    <polygon points='1.4,0 0,1.2 12.6,15 0,28.8 1.4,30 15.1,15'></polygon>
+                                    <polygon points='14.3,0 12.9,1.2 25.6,15 12.9,28.8 14.3,30 28,15'></polygon>
+                                </g>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div theme="blog">
+            <section class="maincontainer">
+                <div class="container is-page">
+                    <header class="navigation-header">
+                        <section class="top-links">
+                            <a href=/>Home</a><p>|</p>
+                        </section>
+                    </header>
+                    <header class="notification-header">
+                    </header>
+                    <div class="blog-post">
+                    <img src="/image/blog/posts/7.jpg">
+                    <h1>Faking It! - InstaCam</h1>
+                    <p><span id=blog-author>Gav Isgone</span> | 26 June 2025</p>
+                    <hr>
+                    <p>People are going to extreme lengths to pull the wool over their friends&apos; eyes on Social Media. If you&apos;ve ever clicked your way through family photos and the perfect summer and winter getaway pics of your friends on Instagram then you&apos;ll know why.</p>
+                    <p>There you are, sitting all alone apart from your six cats, parrot, and a spider called Shep. Your phone goes ping, staring back at you are Mr &amp; Mrs. Perfect skiing in the Alps, head to toe in designer ski wear with two little cute designer-clad offspring. The smiles alone are enough to make you run for the sick bucket. Trouble is you went to school with this woman and she keeps asking you &apos;what you&apos;re up to these days&apos;. You&apos;ve managed to sneak a peek at the messages but in a way they don&apos;t show as being read. Good move, buying time.</p>
+                    <p>Help is at hand. A group of amateur models and performers are offering their services for free! Yes, that&apos;s right, totally free of charge. They get the experience, and the chance to build up their portfolio. The company is called InstaCam and they provide a green screen and a selection of over 10, 000 backdrops for you to choose from. Not only that they have a hamper bursting with the appropriate costumes for you to wear when faking it in the Caribbean.</p>
+                    <p>I started using InstaCam a few months ago and I haven&apos;t looked back since. My timeline is bursting with professionally taken photos of myself with my perfect husband and kids traveling the world. Not only that, we have apparently met many, many celebrities along the way. My favorites have to be Monte Carlo with the Beckhams, and tea at the Palace with the Queen of England.</p>
+                    <p>There is a slight drawback to this perfect online life, there will always be one. I have been inundated with friend requests from so many ex-schoolmates. My popularity has soared, which is lovely, but they all want to meet up, visit my home and make plans to holiday as a perfect little group of fakeys. I thought everyone was faking it on Social media! It appears not to be the case. How can I now tell them all I live in a tiny rent-controlled apartment and work as a school librarian? The furthest I have ever traveled is the Lower East Side when I got lost crossing the Williamsburg bridge!</p>
+                    <p>I like my InstaCam life, and for now, think I&apos;ll hang onto it. Those ex-school friends will find someone else to stalk sooner or later. At least I&apos;ll always have my fake memories to keep me warm at night</p>
+                    <div/>
+                    <hr>
+                    <h1>Comments</h1>
+                    <section class="comment">
+                        <p>
+                        <img src="/resources/images/avatarDefault.svg" class="avatar">                            Nick O&apos;Bocka | 22 July 2025
+                        </p>
+                        <p>I tried to read this blog going through the car wash. I could barely read for all the soap in my eyes!</p>
+                        <p></p>
+                    </section>
+                    <section class="comment">
+                        <p>
+                        <img src="/resources/images/avatarDefault.svg" class="avatar">                            <a id="author" href="http:a.com">a</a> | 24 July 2025
+                        </p>
+                        <p>a</p>
+                        <p></p>
+                    </section>
+                    <section class="comment">
+                        <p>
+                        <img src="/resources/images/avatarDefault.svg" class="avatar">                            <a id="author" href="http:a.com">a</a> | 24 July 2025
+                        </p>
+                        <p></p><script>alert(1)</script></p>
+                        <p></p>
+                    </section>
+                    <hr>
+                    <section class="add-comment">
+                        <h2>Leave a comment</h2>
+                        <form action="/post/comment" method="POST" enctype="application/x-www-form-urlencoded">
+                            <input required type="hidden" name="csrf" value="H2axXnoNjMngru1LOaWAmHokXBvtlBvI">
+                            <input required type="hidden" name="postId" value="4">
+                            <label>Comment:</label>
+                            <textarea required rows="12" cols="300" name="comment"></textarea>
+                                    <label>Name:</label>
+                                    <input required type="text" name="name">
+                                    <label>Email:</label>
+                                    <input required type="email" name="email">
+                                    <label>Website:</label>
+                                    <input pattern="(http:|https:).+" type="text" name="website">
+                            <button class="button" type="submit">Post Comment</button>
+                        </form>
+                    </section>
+                    <div class="is-linkback">
+                        <a href="/">Back to Blog</a>
+                    </div>
+                </div>
+            </section>
+            <div class="footer-wrapper">
+            </div>
+        </div>
+    </body>
+</html>
