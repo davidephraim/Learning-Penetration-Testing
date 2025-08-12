@@ -93,6 +93,9 @@ The steps used to perform can be reached below (sequence).
 To solve the lab, deliver an exploit to the victim that <b>calls the print() function in their browser</b>.
 
 The steps used to perform can be reached below (sequence).
+1. https://0a0700dd031104c1800403b800820064.web-security-academy.net/
+2. We can inspect the page and can find the JQuery script that listen on 'hashchange' (#) on the end of URL. The script process start with create variable called "post" then assigned to the result of another JQuery selector. 
+3. 
 
 <br></br>
 

